@@ -2,14 +2,26 @@ import Logo from "./_components/Logo.js";
 import Navigation from "./_components/Navigation.js";
 import "./_styles/globals.css"
 
+import {Josefin_Sans} from "next/font/google"
+
+const josefin = Josefin_Sans({
+	subsets: ['latin'],
+	display: "swap"
+})
+
+
 export const metadata = {
-	title: "The Wild Oasis",
+	title: {
+		template: "%s / The Wild Oasis",
+		default: "Welcome / The Wild Oasis"
+	},
+	description: "Experience wilderness luxury in our exclusive mountain cabins, where nature and comfort unite"
 };
 
 function RootLayout({ children }) {
 	return (
 		<html>
-			<body className="bg-primary-950 text-primary-100 min-h-screen">
+			<body className={`${josefin.className} bg-primary-950 text-primary-100 min-h-screen`}>
 				<header>
 					<Logo />
 					<Navigation />
