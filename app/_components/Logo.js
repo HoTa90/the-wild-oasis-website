@@ -1,3 +1,4 @@
+import Image from "next/image.js";
 import Link from "next/link.js";
 
 function Logo() {
@@ -5,7 +6,7 @@ function Logo() {
 		<Link
 			href="/"
 			className="flex items-center gap-4 z-10">
-			<img
+			<Image
 				src="/logo.png"
 				height="60"
 				width="60"
