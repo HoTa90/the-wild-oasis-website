@@ -7,12 +7,12 @@ function CabinCard({ cabin }) {
 
 	return (
 		<div className="flex border-primary-800 border">
-			<div className="flex-1 relative">
+			<div className="flex-1 relative overflow-hidden">
 				<Image
 					src={image}
 					alt={`Cabin ${name}`}
 					fill
-					className="object-cover border-r border-primary-800"
+					className="object-cover border-r border-primary-800  hover:scale-105 transition-transform duration-700"
 				/>
 			</div>
 
