@@ -26,6 +26,10 @@
   --color-accent-950: #382814;
 }
 
+html {
+  scrollbar-gutter: stable;
+}
+
 @layer components {
   .spinner {
     margin: 3.2rem auto 1.6rem;
