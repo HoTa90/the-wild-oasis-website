@@ -1,3 +1,4 @@
+import TextExpander from "@/app/_components/TextExpander.js";
 import { getCabin, getCabins } from "@/app/_lib/data-service.js";
 import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
 import Image from "next/image.js";
@@ -10,9 +11,7 @@ export async function generateMetadata({ params }) {
 
 export async function generateStaticParams() {
 	const cabins = await getCabins();
-	const ids = cabins.map((cabin) => {
-		cabindId: String(cabin.id);
-	});
+	const ids = cabins.map((cabin) => ({ cabindId: String(cabin.id) }));
 	return ids;
 }
 
@@ -34,9 +33,11 @@ export default async function Page({ params }) {
 				</div>
 
 				<div className="flex flex-col justify-center space-y-8">
-					<div>
+					<div className="flex-1">
 						<h1 className="text-5xl lg:text-6xl font-bold text-accent-100 mb-6">Cabin {name}</h1>
-						<p className="text-lg text-primary-200 leading-relaxed">{description}</p>
+						<p className="text-lg text-primary-200 leading-relaxed">
+							<TextExpander>{description}</TextExpander>
+						</p>
 					</div>
 
 					<div className="grid grid-cols-1 gap-4">
