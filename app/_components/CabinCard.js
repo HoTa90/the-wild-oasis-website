@@ -12,7 +12,8 @@ function CabinCard({ cabin }) {
 					src={image}
 					alt={`Cabin ${name}`}
 					fill
-					className="object-cover border-r border-primary-800  hover:scale-105 transition-transform duration-700"
+					sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
+					className="object-cover border-r border-primary-800 hover:scale-105 transition-transform duration-700"
 				/>
 			</div>
 
