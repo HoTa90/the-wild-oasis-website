@@ -85,6 +85,7 @@ export default async function Page({ params }) {
 				<p className="text-primary-300 text-lg">Secure your luxury escape in the Dolomites</p>
 				<Suspense fallback={<Spinner />}>
 					<Reservation cabin={cabin} />
+					
 				</Suspense>
 			</div>
 		</div>
