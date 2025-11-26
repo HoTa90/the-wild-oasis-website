@@ -1,7 +1,10 @@
+import Reservation from "@/app/_components/Reservation.js";
+import Spinner from "@/app/_components/Spinner.js";
 import TextExpander from "@/app/_components/TextExpander.js";
 import { getCabin, getCabins } from "@/app/_lib/data-service.js";
 import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
 import Image from "next/image.js";
+import { Suspense } from "react";
 
 export async function generateMetadata({ params }) {
 	const { cabinId } = await params;
@@ -11,6 +14,7 @@ export async function generateMetadata({ params }) {
 
 export async function generateStaticParams() {
 	const cabins = await getCabins();
+
 	const ids = cabins.map((cabin) => ({ cabindId: String(cabin.id) }));
 	return ids;
 }
@@ -18,12 +22,13 @@ export async function generateStaticParams() {
 export default async function Page({ params }) {
 	const { cabinId } = await params;
 	const cabin = await getCabin(cabinId);
+
 	const { id, name, max_capacity: maxCapacity, regular_price: regularPrice, discount, image, description } = cabin;
 
 	return (
 		<div className="max-w-6xl mx-auto mt-8">
 			<div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-16">
-				<div className="relative aspect-square lg:aspect-4/5 rounded-2xl overflow-hidden shadow-2xl">
+				<div className="relative aspect-video lg:aspect-4/5 rounded-2xl overflow-hidden shadow-2xl">
 					<Image
 						fill
 						className="object-cover hover:scale-105 transition-transform duration-700"
@@ -74,8 +79,13 @@ export default async function Page({ params }) {
 				</div>
 			</div>
 			<div className="text-center py-16 px-8 rounded-2xl bg-linear-to-br from-primary-900 to-primary-950 border border-primary-800">
-				<h2 className="text-4xl lg:text-5xl font-bold text-primary-100 mb-4">Reserve today. Pay on arrival.</h2>
+				<h2 className="text-4xl lg:text-5xl font-bold text-accent-400 mb-4">
+					Reserve {name} today. Pay on arrival.
+				</h2>
 				<p className="text-primary-300 text-lg">Secure your luxury escape in the Dolomites</p>
+				<Suspense fallback={<Spinner />}>
+					<Reservation cabin={cabin} />
+				</Suspense>
 			</div>
 		</div>
 	);

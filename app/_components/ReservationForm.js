@@ -1,6 +1,6 @@
-function ReservationForm() {
+function ReservationForm({cabin}) {
   // CHANGE
-  const maxCapacity = 23;
+  const {max_capacity: maxCapacity} = cabin;
 
   return (
     <div className='scale-[1.01]'>
