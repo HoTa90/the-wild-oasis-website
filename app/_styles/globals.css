@@ -60,7 +60,33 @@ html {
 
 .rdp {
 	--rdp-cell-size: 32px !important;
-	--rdp-accent-color: theme("colors.accent.500") !important;
-	--rdp-background-color: theme("colors.accent.600") !important;
+	--rdp-accent-color: var(--color-accent-500) !important;
+	--rdp-background-color: var(--color-accent-600) !important;
 	margin: 0 !important;
 }
+
+.rdp-caption_dropdowns {
+	display: flex;
+	gap: 0.5rem;
+}
+
+.rdp-dropdown_year,
+.rdp-dropdown_month {
+	background-color: var(--color-primary-900);
+	color: var(--color-primary-100);
+	
+}
+
+.rdp-dropdown_year:focus,
+.rdp-dropdown_month:focus {
+	outline: none;
+	border-color: var(--color-accent-500);
+}
+
+/* Style dropdown options */
+.rdp-dropdown_year option,
+.rdp-dropdown_month option {
+	background-color: var(--color-primary-900);
+	color: var(--color-primary-100);
+}
+
