@@ -6,7 +6,7 @@ export const metadata = {
 
 async function Page() {
 	const data = await auth()
-	console.log(data)
+	
   return (
 	  <h2 className="font-semibold text-2xl text-accent-400 mb-7">
 		Welcome, {data?.user?.name}

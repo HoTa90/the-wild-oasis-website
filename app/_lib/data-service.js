@@ -1,6 +1,6 @@
 import { eachDayOfInterval } from "date-fns";
 import { supabase } from "./supabase.js";
-import { notFound } from "next/navigation.js";
+// import { notFound } from "next/navigation.js"; // !fix later
 
 /////////////
 // GET
@@ -13,7 +13,7 @@ export async function getCabin(id) {
 
 	if (error) {
 		console.error(error);
-		notFound()
+		// notFound() // !fix later
 	}
 
 	return data;
@@ -45,7 +45,7 @@ export const getCabins = async function () {
 
 // Guests are uniquely identified by their email address
 export async function getGuest(email) {
-	const { data, error } = await supabase.from("guests").select("*").eq("email", email).single();
+	const { data, error } = await supabase.from("guests").select("*").eq("email", email).maybeSingle();
 
 	// No error here! We handle the possibility of no guest in the sign in callback
 	return data;
@@ -112,8 +112,6 @@ export async function getBookedDatesByCabinId(cabinId) {
 
 export async function getSettings() {
 	const { data, error } = await supabase.from("settings").select("*").single();
-
-	
 
 	if (error) {
 		console.error(error);
