@@ -1,7 +1,11 @@
-"use server"
+"use server";
 
-import { signIn } from "./auth.js"
+import { signIn, signOut } from "./auth.js";
 
-export async function signInAction(){
-	await signIn("google", {redirectTo: "/account"})
+export async function signInAction() {
+	await signIn("google", { redirectTo: "/account" });
+}
+
+export async function signOutAction() {
+	await signOut({ redirectTo: "/" });
 }
