@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache.js";
 import { auth, signIn, signOut } from "./auth.js";
 import { supabase } from "./supabase.js";
 import { getBookings } from "./data-service.js";
+import { redirect } from "next/navigation.js";
 
 export async function updateProfile(prevState, formData) {
 	const session = await auth();
@@ -54,6 +55,56 @@ export async function updateProfile(prevState, formData) {
 		success: true,
 		guest: updatedGuest,
 	};
+}
+
+export async function updateReservation(prevState, formData) {
+  const session = await auth();
+  if (!session) {
+    return {
+      ...prevState,
+      error: "You must be logged in",
+      success: false,
+    };
+  }
+
+  const data = Object.fromEntries(formData);
+  const reservationId = Number(data.reservationId);
+  const numGuests = Number(data.numGuests);
+  const observations = data.observations ?? "";
+
+  const guestBookings = await getBookings(session.user.guestId);
+  const ownsReservation = guestBookings.some(
+    (booking) => booking.id === reservationId
+  );
+
+  if (!ownsReservation) {
+    return {
+      ...prevState,
+      error: "You can only edit your own reservations",
+      success: false,
+    };
+  }
+
+  const updatedReservation = {
+    num_guests: numGuests,
+    observations,
+  };
+
+  const { error } = await supabase
+    .from("bookings")
+    .update(updatedReservation)
+    .eq("id", reservationId);
+
+  if (error) {
+    return {
+      ...prevState,
+      error: "Could not update reservation",
+      success: false,
+    };
+  }
+
+  revalidatePath("/account/reservations");
+  redirect("/account/reservations");
 }
 
 export async function signInAction() {
