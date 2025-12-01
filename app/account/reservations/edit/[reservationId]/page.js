@@ -1,9 +1,16 @@
 import UpdateReservationForm from "@/app/_components/UpdateReservationForm.js";
+import { auth } from "@/app/_lib/auth.js";
 import { getBooking, getCabin } from "@/app/_lib/data-service.js";
+import { notFound } from "next/navigation.js";
 
 export default async function Page({ params }) {
 	const { reservationId } = await params;
-	const reservation = await getBooking(reservationId);
+	const session = await auth();
+	const reservation = await getBooking(reservationId, session.user.guestId);
+	if (!reservation) {
+		return notFound();
+	}
+
 	const cabin = await getCabin(reservation.cabin_id);
 
 	return (

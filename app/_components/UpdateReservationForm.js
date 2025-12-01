@@ -69,6 +69,7 @@ export default function UpdateReservationForm({ reservation, cabin }) {
 					{pending ? "Updating.." : "Update reservation"}
 				</button>
 			</div>
+			{state.error && <p className="text-red-400 bg-red-950/40 px-4 py-2 rounded">{state.error}</p>}
 		</form>
 	);
 }

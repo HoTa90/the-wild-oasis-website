@@ -51,8 +51,14 @@ export async function getGuest(email) {
 	return data;
 }
 
-export async function getBooking(id) {
-	const { data, error, count } = await supabase.from("bookings").select("*").eq("id", id).single();
+export async function getBooking(id, guestId = null) {
+	let query = supabase.from("bookings").select("*").eq("id", id);
+
+	if (guestId) {
+		query = query.eq("guest_id", guestId);
+	}
+
+	const { data, error } = guestId ? await query.maybeSingle() : await query.single();
 
 	if (error) {
 		console.error(error);
@@ -189,5 +195,5 @@ export async function createBooking(newBooking) {
 // // DELETE
 
 // export async function deleteBooking(id) {
-// 	
+//
 // }
