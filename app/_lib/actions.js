@@ -121,6 +121,9 @@ export async function deleteReservation(bookingId) {
 		throw new Error("You must be logged in");
 	}
 
+	// await new Promise((res) => setTimeout(res, 2000));
+	// throw new Error()
+
 	const guestBookings = await getBookings(session.user.guestId);
 	const guestBookingsId = guestBookings.map((booking) => booking.id);
 
