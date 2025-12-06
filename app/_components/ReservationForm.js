@@ -1,11 +1,10 @@
 "use client";
 
-import { differenceInDays } from "date-fns";
+import { differenceInDays, format } from "date-fns";
 import { useReservation } from "./ReservationContext.jsx";
 import { createBooking } from "../_lib/actions.js";
 import SubmitButton from "./SubmitButton.js";
 import { useRouter } from "next/navigation.js";
-
 
 function ReservationForm({ cabin, user }) {
 	// CHANGE
@@ -19,12 +18,14 @@ function ReservationForm({ cabin, user }) {
 	const cabinPrice = numNights * (regularPrice - discount);
 
 	const bookingData = {
-		start_date: startDate,
-		end_date: endDate,
+		start_date: startDate ? format(startDate, "yyyy-MM-dd") : null,
+		end_date: endDate ? format(endDate, "yyyy-MM-dd") : null,
 		num_nights: numNights,
 		cabin_id: id,
 		cabin_price: cabinPrice,
 	};
+
+	console.log(bookingData);
 
 	const createBookingWithData = createBooking.bind(null, bookingData);
 
