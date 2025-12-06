@@ -4,11 +4,14 @@ import { differenceInDays } from "date-fns";
 import { useReservation } from "./ReservationContext.jsx";
 import { createBooking } from "../_lib/actions.js";
 import SubmitButton from "./SubmitButton.js";
+import { useRouter } from "next/navigation.js";
+
 
 function ReservationForm({ cabin, user }) {
 	// CHANGE
 	const { max_capacity: maxCapacity, regular_price: regularPrice, discount, id } = cabin;
 	const { range, setRange, resetRange } = useReservation();
+	const router = useRouter();
 
 	const startDate = range.from;
 	const endDate = range.to;
@@ -45,6 +48,7 @@ function ReservationForm({ cabin, user }) {
 				action={async (formData) => {
 					await createBookingWithData(formData);
 					resetRange();
+					router.push("/cabins/thankyou");
 				}}
 				className="bg-primary-900 py-10 px-16 text-lg flex gap-5 flex-col">
 				<div className="space-y-2">
